@@ -11,14 +11,24 @@ function toCell() {
 
 function toColumn(col) {
     return `
-    <div class='column'>${col}</div>
+     <div class='column' data-type="resizable">
+      ${col}
+      <div class="col-resize" data-resize='col'></div>
+    </div>
     `
 }
 
 function createRow(index, content) {
+    const resizer =
+        index
+            ? '<div class="row-resize" data-resize="row"></div>'
+            : ''
     return `
     <div class='row'>
-    <div class="row-info">${index ? index : ''}</div>
+      <div class="row-info">
+        ${index ? index : ''}
+        ${resizer}
+    </div>
     <div class="row-data">${content}</div>
     </div>
     `
@@ -45,7 +55,7 @@ export function createTable(rowsCount = 15) {
             .fill('')
             .map(toCell)
             .join('')
-        rows.push(createRow(i+1, cells))
+        rows.push(createRow(i + 1, cells))
     }
 
     return rows.join('')
